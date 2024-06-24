@@ -43,14 +43,29 @@ function getWinner(userScore, computerScore) {
   else return "It's a draw!";
 }
 
+function resetGame() {
+  round = 1;
+  humanScore = 0;
+  computerScore = 0;
+}
+
+function startGame() {
+  resetGame();
+  while (round <= totalRounds) {
+    playGame();
+  }
+}
+
 let round = 1;
 let humanScore = 0;
 let computerScore = 0;
 const totalRounds = 5;
 
-while (round <= totalRounds) {
-  playGame();
-}
-
 const winner = getWinner(humanScore, computerScore);
 console.log(`And the winner is: ${winner}`);
+
+startGame();
+
+if (confirm("Do you want to play again?")) {
+  startGame();
+}
