@@ -30,3 +30,14 @@ function playRound(humanChoice, computerChoice) {
   }
   round += 1;
 }
+
+function playGame() {
+  let humanSelection = getHumanChoice();
+  let computerSelection = getComputerChoice();
+  playRound(humanSelection, computerSelection);
+}
+
+let round = 1;
+let humanScore = 0;
+let computerScore = 0;
+const totalRounds = 5;
