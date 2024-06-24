@@ -37,6 +37,12 @@ function playGame() {
   playRound(humanSelection, computerSelection);
 }
 
+function getWinner(userScore, computerScore) {
+  if (userScore > computerScore) return "User";
+  else if (computerScore > userScore) return "Computer";
+  else return "It's a draw!";
+}
+
 let round = 1;
 let humanScore = 0;
 let computerScore = 0;
