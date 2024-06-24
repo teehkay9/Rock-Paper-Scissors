@@ -41,3 +41,10 @@ let round = 1;
 let humanScore = 0;
 let computerScore = 0;
 const totalRounds = 5;
+
+while (round <= totalRounds) {
+  playGame();
+}
+
+const winner = getWinner(humanScore, computerScore);
+console.log(`And the winner is: ${winner}`);
