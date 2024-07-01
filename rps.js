@@ -1,4 +1,4 @@
-console.log("Welcome to Rock Paper Scissors!");
+/* console.log("Welcome to Rock Paper Scissors!");
 
 function getComputerChoice() {
   const choices = ["Rock", "Paper", "Scissor"];
@@ -69,3 +69,4 @@ startGame();
 if (confirm("Do you want to play again?")) {
   startGame();
 }
+ */

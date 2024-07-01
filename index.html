@@ -4,9 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissors</title>
-    <script src="rps.js"></script>
+    <link rel="stylesheet" href="style.css"></link>
+       <script src="rps.js"></script>
   </head>
   <body style="text-align: center">
-    <h1>Open the console and start the game, good luck!</h1>
+    <div class="header">
+      <h1>Welcome to Rock Paper Scissor! Start the game or next round by clicking on a button!</h1>
+    </div>
+    <div class="score">
+      <div id="user">User Score: 0</div>
+      <div id="computer">Computer Score: 0</div>
+    </div>
+    <div class="play-area">
+      <ul class="ul-buttons">
+        <li id="rock"><button>Rock</button></li>
+        <li id="rock"><button>Paper</button></li>
+        <li id="rock"><button>Scissor</button></li>
+      </ul>
+    </div>
   </body>
 </html>
