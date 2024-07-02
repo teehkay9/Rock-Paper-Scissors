@@ -1,72 +1,116 @@
-/* console.log("Welcome to Rock Paper Scissors!");
+// global variables
+let userScore = 0;
+let computerScore = 0;
 
+const userScoreNode = document.querySelector("#user");
+const computerScoreNode = document.querySelector("#computer");
+
+let userChoice = null;
+let computerChoice = null;
+
+// functions
 function getComputerChoice() {
   const choices = ["Rock", "Paper", "Scissor"];
   const random_choice = Math.floor(Math.random() * 3);
   return choices[random_choice];
 }
 
-function getHumanChoice() {
-  const choices = ["Rock", "Paper", "Scissor"];
-  const humanChoice = Number(prompt("For 'Rock' enter 0, for 'Paper' enter 1 and for 'Scissor' enter 2: "));
-  return choices[humanChoice];
+function playRound(humanChoice, computerChoice) {
+  if (humanChoice === computerChoice) {
+    return null;
+  } else if (
+    (humanChoice === "Rock" && computerChoice === "Scissor") ||
+    (humanChoice === "Paper" && computerChoice === "Rock") ||
+    (humanChoice === "Scissor" && computerChoice === "Paper")
+  ) {
+    return "user";
+  } else {
+    return "computer";
+  }
 }
 
-function playRound(humanChoice, computerChoice) {
-  console.log(`Round: ${round}. User score = ${humanScore}, Computer score = ${computerScore}`);
-  console.log(`User chooses ${humanChoice}, Computer chooses ${computerChoice}.`);
-  if (humanChoice.toLowerCase() === computerChoice.toLowerCase()) {
-    console.log("It's a draw!");
-  } else if (
-    (humanChoice.toLowerCase() === "rock" && computerChoice.toLowerCase() === "scissor") ||
-    (humanChoice.toLowerCase() === "paper" && computerChoice.toLowerCase() === "rock") ||
-    (humanChoice.toLowerCase() === "scissor" && computerChoice.toLowerCase() === "paper")
-  ) {
-    console.log("User won!");
-    humanScore += 1;
-  } else {
-    console.log("Computer won!");
+function updateScore(winner) {
+  if (winner === "user") {
+    userScore += 1;
+    userScoreNode.textContent = `User Score: ${userScore}`;
+  } else if (winner === "computer") {
     computerScore += 1;
+    computerScoreNode.textContent = `Computer Score: ${computerScore}`;
+  } else return;
+}
+
+function shouldEndGame(userScore, computerScore) {
+  if (userScore >= 5 || computerScore >= 5) {
+    return true;
   }
-  round += 1;
+  return false;
+}
+
+function handleButtonClick(event) {
+  let target = event.target;
+
+  if (target.tagName.toLowerCase() === "button") {
+    const parentLi = target.parentElement;
+
+    switch (parentLi.id) {
+      case "rock":
+        userChoice = "Rock";
+        break;
+      case "paper":
+        userChoice = "Paper";
+        break;
+      case "scissor":
+        userChoice = "Scissor";
+        break;
+    }
+  }
+
+  // get computer choice
+  computerChoice = getComputerChoice();
+
+  // play a round
+  let winner = playRound(userChoice, computerChoice);
+
+  if (winner) {
+    console.log(`The user chooses: ${userChoice}, the computer chooses ${computerChoice}. The winner is ${winner}!`);
+  } else {
+    console.log(`The user chooses: ${userChoice}, the computer chooses ${computerChoice}. It's a draw!`);
+  }
+
+  updateScore(winner);
+
+  if (shouldEndGame(userScore, computerScore)) {
+    // if game ends, create a new div to display final score, winner and reset global variables
+    const resultDiv = document.createElement("h2");
+    resultDiv.textContent = `The final winner is ${winner.toUpperCase()}`;
+
+    const container = document.querySelector("body");
+    container.appendChild(resultDiv);
+
+    // Delay the prompt to ensure the DOM updates are applied
+    setTimeout(() => {
+      const playNewRound = prompt("If you want to play a new game, type yes.");
+      if (playNewRound.toLowerCase() === "yes" || playNewRound.toLowerCase() === "y") {
+        userScore = 0;
+        computerScore = 0;
+
+        userScoreNode.textContent = `User Score: ${userScore}`;
+        computerScoreNode.textContent = `Computer Score: ${computerScore}`;
+
+        resultDiv.remove();
+        playGame();
+      }
+    }, 100); // Adjust the delay as needed
+  }
 }
 
 function playGame() {
-  let humanSelection = getHumanChoice();
-  let computerSelection = getComputerChoice();
-  playRound(humanSelection, computerSelection);
+  // button event handler
+  let ulButton = document.querySelector(".ul-buttons");
+
+  // Remove any existing event listeners
+  ulButton.removeEventListener("click", handleButtonClick);
+  ulButton.addEventListener("click", handleButtonClick);
 }
 
-function getWinner(userScore, computerScore) {
-  if (userScore > computerScore) return "User";
-  else if (computerScore > userScore) return "Computer";
-  else return "It's a draw!";
-}
-
-function resetGame() {
-  round = 1;
-  humanScore = 0;
-  computerScore = 0;
-}
-
-function startGame() {
-  resetGame();
-  while (round <= totalRounds) {
-    playGame();
-  }
-}
-
-let round = 1;
-let humanScore = 0;
-let computerScore = 0;
-const totalRounds = 5;
-
-const winner = getWinner(humanScore, computerScore);
-console.log(`And the winner is: ${winner}`);
-
-startGame();
-
-if (confirm("Do you want to play again?")) {
-  startGame();
-}
- */
+playGame();
